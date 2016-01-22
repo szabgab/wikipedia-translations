@@ -39,12 +39,6 @@ foreach my $link (@links) {
 	system "mysql -u root -psecret wikipedia < b.sql";
 
 
-	my $dbh = DBI->connect('DBI:mysql:database=wikipedia;', 'root', 'secret');
-	my $sth = $dbh->prepare('SELECT page_title, page_id, page_len FROM page WHERE page_namespace=0 AND page_is_redirect=0 AND page_is_new=0 AND page_len > 500 AND page_id NOT IN
-                           (SELECT ll_from FROM langlinks WHERE ll_lang='en') ORDER BY page_len DESC LIMIT 100');
-	$sth->execute;
-	while (my $h = $sth->fetchrow_hashref) {
-	}
 }
 
 # https://dumps.wikimedia.org/huwiki/20160111/huwiki-20160111-langlinks.sql.gz
