@@ -6,18 +6,31 @@ use 5.010;
 use Data::Dumper qw(Dumper);
 use DBI;
 
-my $language = 'Sundanese';
-my $wiki = 'su';
-my $explain = 'https://en.wikipedia.org/wiki/Sundanese_language';
-my $url = "https://$wiki.wikipedia.org";
+my %conf = (
+	ace => {
+		language => 'Acehnese',
+		explain => 'https://en.wikipedia.org/wiki/Acehnese_language',
+	},
+	hu => {
+		language => 'Hungarian',
+		explain => 'https://en.wikipedia.org/wiki/Hungarian_language',
+	},
+	su => {
+		language => 'Sundanese',
+		explain => 'https://en.wikipedia.org/wiki/Sundanese_language',
+	},
+);
 
 my $N = 100;
 
-
-generate_html();
-
+foreach my $wiki (@ARGV) {
+	generate_html($wiki);
+}
 
 sub generate_html {
+	my ($wiki) = @_;
+
+	my $url = "https://$wiki.wikipedia.org";
 	my $dbh = DBI->connect('DBI:mysql:database=wikipedia;', 'root', 'secret');
 	my $sth = $dbh->prepare(q{
 		SELECT page_title, page_id, page_len FROM page WHERE page_namespace=0 AND page_is_redirect=0 AND page_is_new=0 AND page_len > 500 AND page_id NOT IN
@@ -35,7 +48,7 @@ sub generate_html {
 
 	print <<"HTML";
 <p>
-The top $N largest articles in <a href="$explain">$language</a> that don't have links to their English counterparts.
+The top $N largest articles in <a href="$conf{$wiki}{explain}">$conf{$wiki}{language}</a> that don't have links to their English counterparts.
 <p>
 Last updated at $time
 <p>
