@@ -1,0 +1,28 @@
+{
+	"ace" : {
+		"language" : "Acehnese",
+		"explain"  : "https://en.wikipedia.org/wiki/Acehnese_language"
+	},
+	"he" : {
+		"language" : "Hebrew",
+		"explain"  : "https://en.wikipedia.org/wiki/Hebrew_language",
+		"rtl"      : 1
+	},
+	"ar" : {
+		"language" : "Arabic",
+		"explain"  : "https://en.wikipedia.org/wiki/Arabic",
+		"rtl"      :  1
+	},
+	"hu" : {
+		"language" : "Hungarian",
+		"explain" : "https://en.wikipedia.org/wiki/Hungarian_language"
+	},
+	"su" : {
+		"language" : "Sundanese",
+		"explain" : "https://en.wikipedia.org/wiki/Sundanese_language"
+	},
+	"af" : {
+		"language" : "Afrikaans",
+		"explain" : "https://en.wikipedia.org/wiki/Afrikaans"
+	}
+}
