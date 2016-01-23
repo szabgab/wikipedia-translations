@@ -90,7 +90,7 @@ sub generate_html {
 		$html .= qq{<li><a href="$url/wiki/$h->{page_title}">$h->{page_title}  ($h->{page_len})</a></li>\n};
 	}
 
-	my ($total_pages) = $dbh->selectrow_array(q{SELECT COUNT(*) FROM page});
+	my ($total_pages) = $dbh->selectrow_array(q{SELECT COUNT(*) FROM page WHERE page_namespace=0 and page_is_redirect=0 AND page_is_new=0});
 	my ($no_english) = $dbh->selectrow_array(q{SELECT COUNT(page_title) FROM page WHERE page_namespace=0 AND page_is_redirect=0 AND page_is_new=0 AND page_id NOT IN
                           (SELECT ll_from FROM langlinks WHERE ll_lang='en')});
 
