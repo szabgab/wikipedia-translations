@@ -16,6 +16,21 @@ my %conf = (
 		language => 'Acehnese',
 		explain => 'https://en.wikipedia.org/wiki/Acehnese_language',
 	},
+	he => {
+		language => 'Hebrew',
+		explain => 'https://en.wikipedia.org/wiki/Hebrew_language',
+		rtl => 1,
+	},
+	he => {
+		language => 'Hebrew',
+		explain => 'https://en.wikipedia.org/wiki/Hebrew_language',
+		rtl => 1,
+	},
+	ar => {
+		language => 'Arabic',
+		explain => 'https://en.wikipedia.org/wiki/Arabic',
+		rtl => 1,
+	},
 	hu => {
 		language => 'Hungarian',
 		explain => 'https://en.wikipedia.org/wiki/Hungarian_language',
@@ -24,8 +39,12 @@ my %conf = (
 		language => 'Sundanese',
 		explain => 'https://en.wikipedia.org/wiki/Sundanese_language',
 	},
+	af => {
+		language => 'Afrikaans',
+		explain => 'https://en.wikipedia.org/wiki/Afrikaans',
+	},
 );
-my $N = 100;
+my $N = 250;
 
 
 GetOptions(\my %opt, 'help', 'fetch', 'load', 'html') or usage();
@@ -111,6 +130,7 @@ sub generate_html {
 use DateTime::Tiny;
 
 	my $date = DateTime::Tiny->now;
+	my $rtl = $conf{$wiki}{rtl} ? q{ class="rtl"} : '';
 
 	print <<"HTML";
 =title Wikipedia: $conf{$wiki}{language} ($wiki)
@@ -126,8 +146,16 @@ use DateTime::Tiny;
 =abstract start
 =abstract end
 
+<!-- This is a generated file. Do not edit manually! -->
+<style>
+.rtl {
+	direction: rtl;
+	text-align: right;
+}
+</style>
+
 <p>
-This <a href="$conf{$wiki}{explain}">$conf{$wiki}{language}</a> Wikipedia has $total_pages pages. A total of $no_english pages have no link to their English counterpart.
+The <a href="$conf{$wiki}{explain}">$conf{$wiki}{language}</a> Wikipedia has $total_pages pages. A total of $no_english pages have no link to their English counterpart.
 Here we you can see the $N largest articles in that don't have links to their English counterparts.
 <p>
 These articles either need an interwiki link to the English version of this page (and one from English back to this page),
@@ -136,9 +164,11 @@ or they need to be translated to English first and then they need the link to th
 Last updated at $date
 <p>
 
-HTML
+<div$rtl>
+$html
+</div>
 
-	print $html;
+HTML
 }
 
 
