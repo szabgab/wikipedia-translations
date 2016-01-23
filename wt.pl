@@ -5,12 +5,30 @@ use 5.010;
 
 use Cwd qw(getcwd);
 use Data::Dumper qw(Dumper);
-use Web::Query;
-use LWP::Simple qw(getstore);
+use DBI;
 use File::Temp qw(tempdir);
 use Getopt::Long qw(GetOptions);
+use LWP::Simple qw(getstore);
+use Web::Query;
 
-GetOptions(\my %opt, 'help', 'fetch', 'load') or usage();
+my %conf = (
+	ace => {
+		language => 'Acehnese',
+		explain => 'https://en.wikipedia.org/wiki/Acehnese_language',
+	},
+	hu => {
+		language => 'Hungarian',
+		explain => 'https://en.wikipedia.org/wiki/Hungarian_language',
+	},
+	su => {
+		language => 'Sundanese',
+		explain => 'https://en.wikipedia.org/wiki/Sundanese_language',
+	},
+);
+my $N = 100;
+
+
+GetOptions(\my %opt, 'help', 'fetch', 'load', 'html') or usage();
 usage() if $opt{help};
 usage('Need at least one language') if not @ARGV;
 my @languages = @ARGV;
@@ -57,6 +75,73 @@ if ($opt{load}) {
 		}
 	}
 }
+
+
+if ($opt{html}) {
+	foreach my $wiki (@languages) {
+		generate_html($wiki);
+	}
+}
+
+
+sub generate_html {
+	my ($wiki) = @_;
+
+	my $url = "https://$wiki.wikipedia.org";
+	my $dbh = DBI->connect('DBI:mysql:database=wikipedia;', 'root', 'secret');
+#AND page_len > 500 
+	my $sth = $dbh->prepare(q{
+		SELECT page_title, page_id, page_len FROM page WHERE page_namespace=0 AND page_is_redirect=0 AND page_is_new=0 AND page_id NOT IN
+                          (SELECT ll_from FROM langlinks WHERE ll_lang='en') ORDER BY page_len DESC LIMIT ?
+			});
+	$sth->execute($N);
+	my $html = "<ul>\n";
+	while (my $h = $sth->fetchrow_hashref) {
+		$html .= qq{<li><a href="$url/wiki/$h->{page_title}">$h->{page_title}  ($h->{page_len})</a></li>\n};
+	}
+
+	my ($total_pages) = $dbh->selectrow_array(q{SELECT COUNT(*) FROM page});
+	my ($no_english) = $dbh->selectrow_array(q{SELECT COUNT(page_title) FROM page WHERE page_namespace=0 AND page_is_redirect=0 AND page_is_new=0 AND page_id NOT IN
+                          (SELECT ll_from FROM langlinks WHERE ll_lang='en')});
+
+
+	$html .= "</ul>";
+		#print Dumper $h;
+		#<STDIN>;
+use DateTime::Tiny;
+
+	my $date = DateTime::Tiny->now;
+
+	print <<"HTML";
+=title Wikipedia: $conf{$wiki}{language} ($wiki)
+=timestamp $date
+=indexes wikipedia
+=status show
+=books wikipedia
+=author szabgab
+=archive 0
+=comments_disqus_enable 0
+=show_related 0
+
+=abstract start
+=abstract end
+
+<p>
+This <a href="$conf{$wiki}{explain}">$conf{$wiki}{language}</a> Wikipedia has $total_pages pages. A total of $no_english pages have no link to their English counterpart.
+Here we you can see the $N largest articles in that don't have links to their English counterparts.
+<p>
+These articles either need an interwiki link to the English version of this page (and one from English back to this page),
+or they need to be translated to English first and then they need the link to that article.
+<p>
+Last updated at $date
+<p>
+
+HTML
+
+	print $html;
+}
+
+
 
 sub usage {
 	my ($msg) = @_;
