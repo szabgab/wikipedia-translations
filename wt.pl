@@ -29,7 +29,7 @@ if ($opt{fetch}) {
 	wq('https://dumps.wikimedia.org/backup-index.html')->find('li')->each(sub {
 		my ($i, $elem) = @_;  # $elem is a Web::Query object
 	    # 2016-01-14 21:23:04 snwiki: Dump complete
-		if ($elem->text =~ qr{^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d (\w*wiki): Dump complete$}) {
+		if ($elem->text =~ qr{^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d ([\w-]*wiki): Dump complete$}) {
 			my $link = $elem->find('a')->attr('href') // '';
 			#printf("li: %s %s\n", $elem->text, $link);  # link is: chwiki/20160111
 			push @links, $link;
@@ -52,25 +52,42 @@ if ($opt{fetch}) {
 	}
 }
 
-if ($opt{load}) {
-	foreach my $lang (@languages) {
-		say $lang;
+foreach my $lang (@languages) {
+	if ($opt{load}) {
+		say "Loading language $lang";
 		my @files = glob "sql/${lang}wiki*.sql";
 		#print Dumper \@files;
-		die "Could not find files for $lang\n" if @files == 0;
-		die "Found only one file ($files[0]) for $lang\n" if @files == 1;
-		die "More than two files found for $lang: " . Dumper \@files if @files > 2;
+		if (@files == 0) {
+			warn "Could not find files for $lang\n";
+			next;
+		}
+		if (@files == 1) {
+			warn "Found only one file ($files[0]) for $lang\n";
+			warn next;
+		}
+		if (@files > 2) {
+			warn "More than two files found for $lang: " . Dumper \@files;
+			next;
+		}
 		foreach my $file (@files) {
 			system "mysql -u root -psecret wikipedia < $file";
 		}
 	}
+	if ($opt{html}) {
+		say "Creating HTML for language $lang";
+		generate_html($lang);
+	}
 }
 
 
+
 if ($opt{html}) {
-	foreach my $wiki (@languages) {
-		generate_html($wiki);
+	my $html = "<ul>\n";
+	foreach my $lang (sort keys %$conf) {
+		$html .= qq{    <li><a href="/wikipedia/$lang">$conf->{$lang}{language}</a></li>\n};
 	}
+	$html .= "</ul>\n";
+	path('list.txt')->spew_utf8($html);
 }
 
 
@@ -103,7 +120,7 @@ use DateTime::Tiny;
 	my $date = DateTime::Tiny->now;
 	my $rtl = $conf->{$wiki}{rtl} ? q{ class="rtl"} : '';
 
-	print <<"HTML";
+	my $out = <<"HTML";
 =title Wikipedia: $conf->{$wiki}{language} ($wiki)
 =timestamp $date
 =indexes wikipedia
@@ -140,6 +157,8 @@ $html
 </div>
 
 HTML
+
+	path("$wiki.txt")->spew($out);
 }
 
 
