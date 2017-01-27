@@ -24,5 +24,23 @@
 	"af" : {
 		"language" : "Afrikaans",
 		"explain" : "https://en.wikipedia.org/wiki/Afrikaans"
+	},
+
+	"mhr" : {
+		"language" : "Meadow Mari",
+		"explain" : "https://en.wikipedia.org/wiki/Meadow_Mari_language"
+	},
+	"pam" : {
+		"language" : "Kapampangan",
+		"explain" : "https://en.wikipedia.org/wiki/Kapampangan_language"
+	},
+	"azb" : {
+		"language" : "South Azerbaijani",
+		"explain" : "https://en.wikipedia.org/wiki/South_Azerbaijani_language",
+		"rtl" : 1
+	},
+	"ilo" : {
+		"language" : "Ilokano",
+		"explain" : "https://en.wikipedia.org/wiki/Ilokano_language"
 	}
 }
