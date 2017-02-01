@@ -6,17 +6,20 @@ use 5.010;
 use Cwd qw(getcwd);
 use Data::Dumper qw(Dumper);
 use DBI;
+use File::Copy qw(move);
 use File::Temp qw(tempdir);
 use Getopt::Long qw(GetOptions);
 use LWP::Simple qw(getstore);
 use Web::Query;
 use Path::Tiny qw(path);
 use JSON qw(decode_json);
+use POSIX qw(strftime);
 
 my $conf = decode_json path('languages.json')->slurp_utf8;
 
 my $N = 250;
 
+my $date = strftime("%Y%m%d", localtime());
 
 GetOptions(\my %opt, 'help', 'fetch', 'load', 'html') or usage();
 usage() if $opt{help};
@@ -25,32 +28,61 @@ my @languages = @ARGV;
 
 if ($opt{fetch}) {
 	my @links;
+
+	# https://dumps.wikimedia.org/huwiki/20160111/huwiki-20160111-langlinks.sql.gz
+	#suwiki-20160111-
+	#suwiki-20160111-page.sql.gz 
+	# <li>2016-01-17 22:31:42 <a href="huwiki/20160111">huwiki</a>: <span class='done'>Dump complete</span></li>
 	
-	wq('https://dumps.wikimedia.org/backup-index.html')->find('li')->each(sub {
-		my ($i, $elem) = @_;  # $elem is a Web::Query object
-	    # 2016-01-14 21:23:04 snwiki: Dump complete
-		if ($elem->text =~ qr{^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d ([\w-]*wiki): Dump complete$}) {
-			my $link = $elem->find('a')->attr('href') // '';
-			#printf("li: %s %s\n", $elem->text, $link);  # link is: chwiki/20160111
-			push @links, $link;
-		}
+	#wq('https://dumps.wikimedia.org/backup-index.html')->find('li')->each(sub {
+	#	my ($i, $elem) = @_;  # $elem is a Web::Query object
+	#    # 2016-01-14 21:23:04 snwiki: Dump complete
+	#	# TODO: 2017-02-01 15:28:06 arwiki: Partial dump
+	#	if ($elem->text =~ qr{^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d ([\w-]*wiki): Dump complete$}) {
+	#		my $link = $elem->find('a')->attr('href') // '';
+	#		#printf("li: %s %s\n", $elem->text, $link);  # link is: chwiki/20160111
+	#		push @links, $link;
+	#	}
+	#
+	#    #2016-01-17 22:31:42 <a href="huwiki/20160111">huwiki</a>: <span class='done'>Dump complete
+	#	#printf("li: %d %s\n", $i+1, $elem->tagname);  # $elem is a Web::Query object
+	#	
+	#});
+	#if (not @links) {
+	#	say "Could not find and link to download";
+	#}
 	
-	    #2016-01-17 22:31:42 <a href="huwiki/20160111">huwiki</a>: <span class='done'>Dump complete
-		#printf("li: %d %s\n", $i+1, $elem->tagname);  # $elem is a Web::Query object
-		
-	});
-	if (not @links) {
-		say "Could not find and link to download";
-	}
-	
-	foreach my $link (@links) {
-		my ($wiki, $date) = split /\//, $link;
-		next if not grep {$wiki eq "${_}wiki"} @languages;
-		say "Fetching $wiki files";
-		foreach my $file ("$wiki-$date-langlinks", "$wiki-$date-page") {
-			say "     $file";
-			getstore("https://dumps.wikimedia.org/$link/$file.sql.gz", "sql/$file.sql.gz");
-			system "gunzip sql/$file.sql.gz";
+	#foreach my $link (@links) {
+	#	my ($wiki, $date) = split /\//, $link;
+	#	next if not grep {$wiki eq "${_}wiki"} @languages;
+	#	say "Fetching $wiki files";
+	#	foreach my $file ("$wiki-$date-langlinks", "$wiki-$date-page") {
+	#		say "     $file";
+	#		getstore("https://dumps.wikimedia.org/$link/$file.sql.gz", "sql/$file.sql.gz");
+	#		system "gunzip sql/$file.sql.gz";
+	#	}
+	#}
+	foreach my $lang (@languages) {
+		say $lang;
+		# Links on the main page look like: /huwiki/20170201/
+		# https://dumps.wikimedia.org/hewiki/20170120/
+		# files to download:
+		# https://dumps.wikimedia.org/hewiki/20170201/hewiki-20170201-langlinks.sql.gz
+		# https://dumps.wikimedia.org/hewiki/20170201/hewiki-20170201-page.sql.gz
+		#my $url = "https://dumps.wikimedia.org/${lang}wiki/$date/";
+		#say $url;
+		foreach my $type ("langlinks", "page") {
+			my $file = "${lang}wiki-$date-$type.sql.gz";
+			my $url = "https://dumps.wikimedia.org/${lang}wiki/$date/$file";
+			say $url;
+			my $start = time;
+			#say getstore($url, "sql/$file");
+			if (not -e"sql/$file") {
+				system "wget $url";
+				move $file, "sql/$file";
+			}
+			my $end = time;
+			say "Elapsed: ", ($end-$start);
 		}
 	}
 }
@@ -171,23 +203,17 @@ sub usage {
 	if ($msg) {
 		print "\n * $msg\n\n";
 	}
+	my $languages = join " ", sort keys %$conf;
 	print <<"USAGE";
 Usage: $0 
            --fetch
            --load
            --html
-           LANGUAGES    (eg: hu fi tr)
+           LANGUAGES    ($languages)
 
            --help  (this help)
 USAGE
 	exit;
 }
-
-# https://dumps.wikimedia.org/huwiki/20160111/huwiki-20160111-langlinks.sql.gz
-#suwiki-20160111-
-#suwiki-20160111-page.sql.gz 
-# <li>2016-01-17 22:31:42 <a href="huwiki/20160111">huwiki</a>: <span class='done'>Dump complete</span></li>
-
-
 
 
