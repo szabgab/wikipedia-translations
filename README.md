@@ -68,4 +68,10 @@ $ unzip master.zip
 $ cd wikipedia-translations-master/
 
 
+Related pages
+===============
+* [Wikipedia:Pages needing translation into English](https://en.wikipedia.org/wiki/Wikipedia:Pages_needing_translation_into_English)
+* [Wikipedia:Translators available](https://en.wikipedia.org/wiki/Wikipedia:Translators_available) for translating from other languages to English
+* [Category:Available translators in Wikipedia](https://en.wikipedia.org/wiki/Category:Available_translators_in_Wikipedia) list of all the Wikipedia translators
+* [Wikipedia:Translation](https://en.wikipedia.org/wiki/Wikipedia:Translation)
 
