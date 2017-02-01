@@ -39,6 +39,9 @@ if ($opt{fetch}) {
 		#printf("li: %d %s\n", $i+1, $elem->tagname);  # $elem is a Web::Query object
 		
 	});
+	if (not @links) {
+		say "Could not find and link to download";
+	}
 	
 	foreach my $link (@links) {
 		my ($wiki, $date) = split /\//, $link;
