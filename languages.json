@@ -15,7 +15,26 @@
 	},
 	"hu" : {
 		"language" : "Hungarian",
-		"explain" : "https://en.wikipedia.org/wiki/Hungarian_language"
+		"explain" : "https://en.wikipedia.org/wiki/Hungarian_language",
+		"skip" : [
+			"2016_a_jogalkotásban",
+			"2015_a_jogalkotásban",
+			"2014_a_jogalkotásban",
+			"2013_a_jogalkotásban",
+			"2012_a_jogalkotásban",
+			"2011_a_jogalkotásban",
+			"2010_a_jogalkotásban",
+			"2009_a_jogalkotásban",
+			"2008_a_jogalkotásban",
+			"2007_a_jogalkotásban",
+			"2006_a_jogalkotásban",
+			"2005_a_jogalkotásban",
+			"2004_a_jogalkotásban",
+			"2003_a_jogalkotásban",
+			"2002_a_jogalkotásban",
+			"2001_a_jogalkotásban",
+			"2000_a_jogalkotásban"
+		]
 	},
 	"su" : {
 		"language" : "Sundanese",
