@@ -3,6 +3,9 @@ use strict;
 use warnings;
 use 5.010;
 
+binmode(STDOUT, ":utf8");
+binmode(STDERR, ":utf8");
+
 use Cwd qw(getcwd);
 use Data::Dumper qw(Dumper);
 use DBI;
@@ -12,10 +15,15 @@ use Getopt::Long qw(GetOptions);
 use LWP::Simple qw(getstore);
 use Web::Query;
 use Path::Tiny qw(path);
-use JSON qw(decode_json);
+use JSON qw(decode_json from_json);
 use POSIX qw(strftime);
 
-my $conf = decode_json path('languages.json')->slurp_utf8;
+my $json_str = path('languages.json')->slurp_utf8;
+#print($json_str);
+#exit;
+my $conf = from_json( $json_str, { utf8  => 0 } );
+
+#my $conf = decode_json $json_str;
 
 my $N = 250;
 
