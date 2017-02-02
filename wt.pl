@@ -71,6 +71,7 @@ if ($opt{fetch}) {
 		# https://dumps.wikimedia.org/hewiki/20170201/hewiki-20170201-page.sql.gz
 		#my $url = "https://dumps.wikimedia.org/${lang}wiki/$date/";
 		#say $url;
+		mkdir 'sql' if not -e 'sql';
 		foreach my $type ("langlinks", "page") {
 			my $file = "${lang}wiki-$date-$type.sql.gz";
 			my $url = "https://dumps.wikimedia.org/${lang}wiki/$date/$file";
@@ -80,6 +81,7 @@ if ($opt{fetch}) {
 			if (not -e"sql/$file") {
 				system "wget $url";
 				move $file, "sql/$file";
+				system "gunzip sql/$file";
 			}
 			my $end = time;
 			say "Elapsed: ", ($end-$start);
@@ -116,14 +118,14 @@ foreach my $lang (@languages) {
 
 
 
-if ($opt{html}) {
-	my $html = "<ul>\n";
-	foreach my $lang (sort keys %$conf) {
-		$html .= qq{    <li><a href="/wikipedia/$lang">$conf->{$lang}{language}</a></li>\n};
-	}
-	$html .= "</ul>\n";
-	path('list.txt')->spew_utf8($html);
-}
+#if ($opt{html}) {
+#	my $html = "<ul>\n";
+#	foreach my $lang (sort keys %$conf) {
+#		$html .= qq{    <li><a href="/wikipedia/$lang">$conf->{$lang}{language}</a></li>\n};
+#	}
+#	$html .= "</ul>\n";
+#	path('list.txt')->spew_utf8($html);
+#}
 
 
 sub generate_html {

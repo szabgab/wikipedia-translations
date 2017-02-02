@@ -61,7 +61,7 @@ Installation
 ============
 On Digital Ocean we need to install
 apt-get install unzip libdbd-mysql-perl libwww-perl libpath-tiny-perl libweb-query-perl libjson-perl libdatetime-tiny-perl
-
+apt-get install mysql-server mysql-client  (congigre root password to 'secret')
 
 $ wget https://github.com/szabgab/wikipedia-translations/archive/master.zip
 $ unzip master.zip
@@ -74,4 +74,29 @@ Related pages
 * [Wikipedia:Translators available](https://en.wikipedia.org/wiki/Wikipedia:Translators_available) for translating from other languages to English
 * [Category:Available translators in Wikipedia](https://en.wikipedia.org/wiki/Category:Available_translators_in_Wikipedia) list of all the Wikipedia translators
 * [Wikipedia:Translation](https://en.wikipedia.org/wiki/Wikipedia:Translation)
+
+Old process:
+On https://dumps.wikimedia.org/backup-index.html locate the links that have 'Dump complete' after it. 
+click on the link locate links that are "wiki-DATE-"
+
+suwiki-20160111-langlinks.sql.gz 
+suwiki-20160111-page.sql.gz 
+
+unzip the files
+
+load them into the database
+
+run the sql, create the links to the 100 biggest pages that have no interwiki link to English.
+They either need a link to be added or they need to be translated.
+
+$ mysql -u root -p secret
+> CREATE DATABASE wikipedia;
+
+$ mysql -u root -psecret wikipedia < huwiki-20160111-iwlinks.sql 
+
+All the articles:
+
+```
+SELECT page_title, page_id FROM page WHERE page_namespace=0 AND page_is_redirect=0 AND page_id NOT IN (SELECT ll_from FROM langlinks WHERE ll_lang='en');
+```
 
