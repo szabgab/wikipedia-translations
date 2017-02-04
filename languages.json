@@ -1,77 +1,76 @@
 {
-	"ace" : {
-		"language" : "Acehnese",
-		"explain"  : "https://en.wikipedia.org/wiki/Acehnese_language"
-	},
-	"he" : {
-		"language" : "Hebrew",
-		"explain"  : "https://en.wikipedia.org/wiki/Hebrew_language",
-		"rtl"      : 1
-	},
-	"ar" : {
-		"language" : "Arabic",
-		"explain"  : "https://en.wikipedia.org/wiki/Arabic",
-		"rtl"      :  1
-	},
-	"hu" : {
-		"language" : "Hungarian",
-		"explain" : "https://en.wikipedia.org/wiki/Hungarian_language",
-		"skip" : [
-			"2016_a_jogalkotásban",
-			"2015_a_jogalkotásban",
-			"2014_a_jogalkotásban",
-			"2013_a_jogalkotásban",
-			"2012_a_jogalkotásban",
-			"2011_a_jogalkotásban",
-			"2010_a_jogalkotásban",
-			"2009_a_jogalkotásban",
-			"2008_a_jogalkotásban",
-			"2007_a_jogalkotásban",
-			"2006_a_jogalkotásban",
-			"2005_a_jogalkotásban",
-			"2004_a_jogalkotásban",
-			"2003_a_jogalkotásban",
-			"2002_a_jogalkotásban",
-			"2001_a_jogalkotásban",
-			"2000_a_jogalkotásban"
-		]
-	},
-	"su" : {
-		"language" : "Sundanese",
-		"explain" : "https://en.wikipedia.org/wiki/Sundanese_language"
-	},
-	"af" : {
-		"language" : "Afrikaans",
-		"explain" : "https://en.wikipedia.org/wiki/Afrikaans"
-	},
-
-	"mhr" : {
-		"language" : "Meadow Mari",
-		"explain" : "https://en.wikipedia.org/wiki/Meadow_Mari_language"
-	},
-	"pam" : {
-		"language" : "Kapampangan",
-		"explain" : "https://en.wikipedia.org/wiki/Kapampangan_language"
-	},
-	"azb" : {
-		"language" : "South Azerbaijani",
-		"explain" : "https://en.wikipedia.org/wiki/South_Azerbaijani_language",
-		"rtl" : 1
-	},
-	"ilo" : {
-		"language" : "Ilokano",
-		"explain" : "https://en.wikipedia.org/wiki/Ilokano_language"
-	},
-	"is" : {
-		"languae" : "Icelandic",
-		"explain" : "https://en.wikipedia.org/wiki/Icelandic_language"
-	},
-	"ga" : {
-		"language" : "Irish",
-		"explain" : "https://en.wikipedia.org/wiki/Irish_language"
-	},
-	"yo" : {
-		"language" : "Yorùbá",
-		"explain" : "https://en.wikipedia.org/wiki/Yoruba_language"
-	}
+    "ace": {
+        "explain": "https://en.wikipedia.org/wiki/Acehnese_language",
+        "language": "Acehnese"
+    },
+    "af": {
+        "explain": "https://en.wikipedia.org/wiki/Afrikaans",
+        "language": "Afrikaans"
+    },
+    "ar": {
+        "explain": "https://en.wikipedia.org/wiki/Arabic",
+        "language": "Arabic",
+        "rtl": 1
+    },
+    "azb": {
+        "explain": "https://en.wikipedia.org/wiki/South_Azerbaijani_language",
+        "language": "South Azerbaijani",
+        "rtl": 1
+    },
+    "ga": {
+        "explain": "https://en.wikipedia.org/wiki/Irish_language",
+        "language": "Irish"
+    },
+    "he": {
+        "explain": "https://en.wikipedia.org/wiki/Hebrew_language",
+        "language": "Hebrew",
+        "rtl": 1
+    },
+    "hu": {
+        "explain": "https://en.wikipedia.org/wiki/Hungarian_language",
+        "language": "Hungarian",
+        "skip": [
+            "2016_a_jogalkot\u00e1sban",
+            "2015_a_jogalkot\u00e1sban",
+            "2014_a_jogalkot\u00e1sban",
+            "2013_a_jogalkot\u00e1sban",
+            "2012_a_jogalkot\u00e1sban",
+            "2011_a_jogalkot\u00e1sban",
+            "2010_a_jogalkot\u00e1sban",
+            "2009_a_jogalkot\u00e1sban",
+            "2008_a_jogalkot\u00e1sban",
+            "2007_a_jogalkot\u00e1sban",
+            "2006_a_jogalkot\u00e1sban",
+            "2005_a_jogalkot\u00e1sban",
+            "2004_a_jogalkot\u00e1sban",
+            "2003_a_jogalkot\u00e1sban",
+            "2002_a_jogalkot\u00e1sban",
+            "2001_a_jogalkot\u00e1sban",
+            "2000_a_jogalkot\u00e1sban"
+        ]
+    },
+    "ilo": {
+        "explain": "https://en.wikipedia.org/wiki/Ilokano_language",
+        "language": "Ilokano"
+    },
+    "is": {
+        "explain": "https://en.wikipedia.org/wiki/Icelandic_language",
+        "languae": "Icelandic"
+    },
+    "mhr": {
+        "explain": "https://en.wikipedia.org/wiki/Meadow_Mari_language",
+        "language": "Meadow Mari"
+    },
+    "pam": {
+        "explain": "https://en.wikipedia.org/wiki/Kapampangan_language",
+        "language": "Kapampangan"
+    },
+    "su": {
+        "explain": "https://en.wikipedia.org/wiki/Sundanese_language",
+        "language": "Sundanese"
+    },
+    "yo": {
+        "explain": "https://en.wikipedia.org/wiki/Yoruba_language",
+        "language": "Yor\u00f9b\u00e1"
+    }
 }
