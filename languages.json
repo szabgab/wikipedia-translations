@@ -21,6 +21,10 @@
         "explain": "https://en.wikipedia.org/wiki/Czech_language",
         "language": "Czech"
     },
+    "cy": {
+        "explain": "https://en.wikipedia.org/wiki/Welsh_language",
+        "language": "Welsh"
+    },
     "fi": {
         "explain": "https://en.wikipedia.org/wiki/Finnish_language",
         "language": "Finnish"
@@ -73,9 +77,17 @@
         "explain": "https://en.wikipedia.org/wiki/Korean_language",
         "language": "Korean"
     },
+    "mg": {
+        "explain": "https://en.wikipedia.org/wiki/Malagasy_language",
+        "language": "Malagasy"
+    },
     "mhr": {
         "explain": "https://en.wikipedia.org/wiki/Meadow_Mari_language",
         "language": "Meadow Mari"
+    },
+    "mk": {
+        "explain": "https://en.wikipedia.org/wiki/Macedonian_language",
+        "language": "Macedonian"
     },
     "no": {
         "explain": "https://en.wikipedia.org/wiki/Norwegian_(Bokm%C3%A5l)_language",
@@ -100,6 +112,10 @@
     "su": {
         "explain": "https://en.wikipedia.org/wiki/Sundanese_language",
         "language": "Sundanese"
+    },
+    "ta": {
+        "explain": "https://en.wikipedia.org/wiki/Tamil_language",
+        "language": "Tamil"
     },
     "tr": {
         "explain": "https://en.wikipedia.org/wiki/Turkish_language",
