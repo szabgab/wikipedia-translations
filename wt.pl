@@ -26,8 +26,8 @@ my $json_str = do {
     local $/ = undef;
     <$fh>;
 };
-print($json_str);
-exit;
+#print($json_str);
+#exit;
 my $conf = from_json( $json_str, { utf8  => 0 } );
 
 my $N = 250;
@@ -234,9 +234,8 @@ HTML
 
 sub commafy {
     my $s = shift;
-    my $r = reverse $s;
-    $r =~ s/(...)/$1,/g;
-    return reverse $r;
+    1 while $s =~ s/^([-+]?\d+)(\d{3})/$1,$2/;
+    return $s;
 }
 
 
