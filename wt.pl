@@ -183,6 +183,8 @@ or they need to be translated to English first and then they need the link to th
 <p>
 Last updated at $timestamp using dump from $opt{date}
 <p>
+Read more about <a href="/wikipedia">this project</a>, look at the source code on GitHub, mark some of the pages to be skipped from this list.
+<p>
 
 <div$rtl>
 $html
