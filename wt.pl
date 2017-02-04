@@ -44,61 +44,23 @@ usage('Need at least one language') if not @languages;
 
 
 if ($opt{fetch}) {
-    my @links;
-
-    # https://dumps.wikimedia.org/huwiki/20160111/huwiki-20160111-langlinks.sql.gz
-    #suwiki-20160111-
-    #suwiki-20160111-page.sql.gz 
-    # <li>2016-01-17 22:31:42 <a href="huwiki/20160111">huwiki</a>: <span class='done'>Dump complete</span></li>
-    
-    #wq('https://dumps.wikimedia.org/backup-index.html')->find('li')->each(sub {
-    #   my ($i, $elem) = @_;  # $elem is a Web::Query object
-    #    # 2016-01-14 21:23:04 snwiki: Dump complete
-    #   # TODO: 2017-02-01 15:28:06 arwiki: Partial dump
-    #   if ($elem->text =~ qr{^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d ([\w-]*wiki): Dump complete$}) {
-    #       my $link = $elem->find('a')->attr('href') // '';
-    #       #printf("li: %s %s\n", $elem->text, $link);  # link is: chwiki/20160111
-    #       push @links, $link;
-    #   }
-    #
-    #    #2016-01-17 22:31:42 <a href="huwiki/20160111">huwiki</a>: <span class='done'>Dump complete
-    #   #printf("li: %d %s\n", $i+1, $elem->tagname);  # $elem is a Web::Query object
-    #   
-    #});
-    #if (not @links) {
-    #   say "Could not find and link to download";
-    #}
-    
-    #foreach my $link (@links) {
-    #   my ($wiki, $date) = split /\//, $link;
-    #   next if not grep {$wiki eq "${_}wiki"} @languages;
-    #   say "Fetching $wiki files";
-    #   foreach my $file ("$wiki-$date-langlinks", "$wiki-$date-page") {
-    #       say "     $file";
-    #       getstore("https://dumps.wikimedia.org/$link/$file.sql.gz", "sql/$file.sql.gz");
-    #       system "gunzip sql/$file.sql.gz";
-    #   }
-    #}
     foreach my $lang (@languages) {
         say $lang;
-        # Links on the main page look like: /huwiki/20170201/
         # https://dumps.wikimedia.org/hewiki/20170120/
         # files to download:
         # https://dumps.wikimedia.org/hewiki/20170201/hewiki-20170201-langlinks.sql.gz
         # https://dumps.wikimedia.org/hewiki/20170201/hewiki-20170201-page.sql.gz
-        #my $url = "https://dumps.wikimedia.org/${lang}wiki/$date/";
-        #say $url;
         mkdir 'sql' if not -e 'sql';
         foreach my $type ("langlinks", "page") {
-            my $file = "${lang}wiki-$opt{date}-$type.sql.gz";
-            my $url = "https://dumps.wikimedia.org/${lang}wiki/$opt{date}/$file";
+            my $gzfile = "${lang}wiki-$opt{date}-$type.sql.gz";
+            my $file = substr $gzfile, 0 -3;
+            my $url = "https://dumps.wikimedia.org/${lang}wiki/$opt{date}/$gzfile";
             say $url;
             my $start = time;
-            #say getstore($url, "sql/$file");
-            if (not -e"sql/$file") {
+            if (not -e "sql/$gzfile" and not -e "sql/$file") {
                 system "wget $url";
-                move $file, "sql/$file";
-                system "gunzip sql/$file";
+                move $gzfile, "sql/$gzfile";
+                system "gunzip sql/$gzfile";
             }
             my $end = time;
             say "Elapsed: ", ($end-$start);
@@ -132,7 +94,6 @@ foreach my $lang (@languages) {
         generate_html($lang);
     }
 }
-
 
 
 #if ($opt{html}) {
