@@ -31,7 +31,7 @@ my $conf = from_json( $json_str, { utf8  => 0 } );
 my $N = 250;
 
 
-GetOptions(\my %opt, 'help', 'fetch', 'load', 'html', 'date', 'all') or usage();
+GetOptions(\my %opt, 'help', 'fetch', 'load', 'html', 'date=s', 'all') or usage();
 usage() if $opt{help};
 usage() if not $opt{date};
 my @languages = @ARGV;
@@ -163,7 +163,6 @@ sub generate_html {
             $skip
         ORDER BY page_len DESC LIMIT ?
     };
-    die $sql;
 
     my $dbh = DBI->connect('DBI:mysql:database=wikipedia;', 'root', 'secret');
     my $sth = $dbh->prepare($sql);
@@ -177,12 +176,16 @@ sub generate_html {
     my ($no_english) = $dbh->selectrow_array(q{SELECT COUNT(page_title) FROM page WHERE page_namespace=0 AND page_is_redirect=0 AND page_is_new=0 AND page_id NOT IN
                           (SELECT ll_from FROM langlinks WHERE ll_lang='en')});
 
+    # commafication using sexeger
+    for my $s ($total_pages, $no_englis) {
+        my $r = reverse $s;
+        $r =~ s/(...)/$1,/g
+        $s = reverse $s;
+    }
 
     $html .= "</ul>";
-        #print Dumper $h;
-        #<STDIN>;
 
-    my $timestamp = POSIX::strftime("%Y%m%dT%H:%M:%S", localtime());
+    my $timestamp = POSIX::strftime("%Y-%m-%dT%H:%M:%S", localtime());
     my $rtl = $conf->{$wiki}{rtl} ? q{ class="rtl"} : '';
 
     my $out = <<"HTML";
