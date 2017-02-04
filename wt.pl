@@ -10,6 +10,7 @@ use autodie;
 use Cwd qw(getcwd);
 use Data::Dumper qw(Dumper);
 use DBI;
+use Encode qw(decode);
 use File::Copy qw(move);
 use File::Temp qw(tempdir);
 use Getopt::Long qw(GetOptions);
@@ -25,7 +26,8 @@ my $json_str = do {
     local $/ = undef;
     <$fh>;
 };
-#print($json_str);
+print($json_str);
+exit;
 my $conf = from_json( $json_str, { utf8  => 0 } );
 
 my $N = 250;
@@ -169,7 +171,9 @@ sub generate_html {
     $sth->execute($N);
     my $html = "<ul>\n";
     while (my $h = $sth->fetchrow_hashref) {
-        $html .= qq{<li><a href="$url/wiki/$h->{page_title}">$h->{page_title}  ($h->{page_len})</a></li>\n};
+        my $page_title = decode('UTF-8', $h->{page_title});
+        my $page_len = commafy($h->{page_len});
+        $html .= qq{<li><a href="$url/wiki/$page_title">$page_title  ($page_len)</a></li>\n};
     }
 
     my ($total_pages) = $dbh->selectrow_array(q{SELECT COUNT(*) FROM page WHERE page_namespace=0 and page_is_redirect=0 AND page_is_new=0});
@@ -209,10 +213,10 @@ sub generate_html {
 
 <p>
 The <a href="$conf->{$wiki}{explain}">$conf->{$wiki}{language}</a> Wikipedia has $total_pages pages. A total of $no_english pages have no link to their English counterpart.
-Here we you can see the $N largest articles in that don't have links to their English counterparts.
+Here you can see the $N largest articles that don't have links to their English counterparts.
 <p>
 These articles either need an interwiki link to the English version of this page (and one from English back to this page),
-or they need to be translated to English first and then they need the link to that article.
+or they need to be translated to English first and then they need the link to the English version.
 <p>
 Last updated at $timestamp using dump from $opt{date}
 <p>
@@ -255,6 +259,15 @@ Usage: $0
            --help  (this help)
 USAGE
     exit;
+}
+
+sub list_pages {
+    my $dbh = DBI->connect('DBI:mysql:database=wikipedia;', 'root', 'secret');
+    my $sth = $dbh->prepare('SELECT page_title from page LIMIT 20');
+    $sth->execute();
+    while (my $h = $sth->fetchrow_hashref) {
+        say decode('UTF-8', $h->{page_title});
+    }
 }
 
 # vim: expandtab
