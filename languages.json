@@ -17,6 +17,14 @@
         "language": "South Azerbaijani",
         "rtl": 1
     },
+    "cs": {
+        "explain": "https://en.wikipedia.org/wiki/Czech_language",
+        "language": "Czech"
+    },
+    "fi": {
+        "explain": "https://en.wikipedia.org/wiki/Finnish_language",
+        "language": "Finnish"
+    },
     "ga": {
         "explain": "https://en.wikipedia.org/wiki/Irish_language",
         "language": "Irish"
@@ -49,6 +57,10 @@
             "2000_a_jogalkot\u00e1sban"
         ]
     },
+    "id": {
+        "explain": "https://en.wikipedia.org/wiki/Indonesian_language",
+        "language": "Indonesian"
+    },
     "ilo": {
         "explain": "https://en.wikipedia.org/wiki/Ilokano_language",
         "language": "Ilokano"
@@ -57,17 +69,41 @@
         "explain": "https://en.wikipedia.org/wiki/Icelandic_language",
         "languae": "Icelandic"
     },
+    "ko": {
+        "explain": "https://en.wikipedia.org/wiki/Korean_language",
+        "language": "Korean"
+    },
     "mhr": {
         "explain": "https://en.wikipedia.org/wiki/Meadow_Mari_language",
         "language": "Meadow Mari"
+    },
+    "no": {
+        "explain": "https://en.wikipedia.org/wiki/Norwegian_(Bokm%C3%A5l)_language",
+        "language": "Norwegian (Bokm\u00e5l)"
     },
     "pam": {
         "explain": "https://en.wikipedia.org/wiki/Kapampangan_language",
         "language": "Kapampangan"
     },
+    "ro": {
+        "explain": "https://en.wikipedia.org/wiki/Romanian_language",
+        "language": "Romanian"
+    },
+    "sh": {
+        "explain": "https://en.wikipedia.org/wiki/Serbo-Croatian_language",
+        "language": "Serbo-Croatian"
+    },
+    "sr": {
+        "explain": "https://en.wikipedia.org/wiki/Serbian_language",
+        "language": "Serbian"
+    },
     "su": {
         "explain": "https://en.wikipedia.org/wiki/Sundanese_language",
         "language": "Sundanese"
+    },
+    "tr": {
+        "explain": "https://en.wikipedia.org/wiki/Turkish_language",
+        "language": "Turkish"
     },
     "yo": {
         "explain": "https://en.wikipedia.org/wiki/Yoruba_language",
