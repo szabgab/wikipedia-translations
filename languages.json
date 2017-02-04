@@ -61,5 +61,17 @@
 	"ilo" : {
 		"language" : "Ilokano",
 		"explain" : "https://en.wikipedia.org/wiki/Ilokano_language"
+	},
+	"is" : {
+		"languae" : "Icelandic",
+		"explain" : "https://en.wikipedia.org/wiki/Icelandic_language"
+	},
+	"ga" : {
+		"language" : "Irish",
+		"explain" : "https://en.wikipedia.org/wiki/Irish_language"
+	},
+	"yo" : {
+		"language" : "Yorùbá",
+		"explain" : "https://en.wikipedia.org/wiki/Yoruba_language"
 	}
 }
