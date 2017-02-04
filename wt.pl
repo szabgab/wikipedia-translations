@@ -176,12 +176,9 @@ sub generate_html {
     my ($no_english) = $dbh->selectrow_array(q{SELECT COUNT(page_title) FROM page WHERE page_namespace=0 AND page_is_redirect=0 AND page_is_new=0 AND page_id NOT IN
                           (SELECT ll_from FROM langlinks WHERE ll_lang='en')});
 
-    # commafication using sexeger
-    for my $s ($total_pages, $no_englis) {
-        my $r = reverse $s;
-        $r =~ s/(...)/$1,/g
-        $s = reverse $s;
-    }
+    $total_pages = commafy($total_pages);
+    $no_english  = commafy($no_english);
+
 
     $html .= "</ul>";
 
@@ -231,6 +228,12 @@ HTML
     close $fh;
 }
 
+sub commafy {
+    my $s = shift;
+    my $r = reverse $s;
+    $r =~ s/(...)/$1,/g;
+    return reverse $r;
+}
 
 
 sub usage {
