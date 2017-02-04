@@ -85,8 +85,8 @@ foreach my $lang (@languages) {
             warn "More than two files found for $lang: " . Dumper \@files;
             next;
         }
-        system "mysql -u root -psecret wikipedia -e 'DROP DATABASE wikipedia'";
-        system "mysql -u root -psecret wikipedia -e 'CREATE DATABASE wikipedia'";
+        system "mysql -u root -psecret -e 'DROP DATABASE wikipedia'";
+        system "mysql -u root -psecret -e 'CREATE DATABASE wikipedia'";
         foreach my $file (@files) {
             system "mysql -u root -psecret wikipedia < $file";
         }
