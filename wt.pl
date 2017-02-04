@@ -53,7 +53,7 @@ if ($opt{fetch}) {
         mkdir 'sql' if not -e 'sql';
         foreach my $type ("langlinks", "page") {
             my $gzfile = "${lang}wiki-$opt{date}-$type.sql.gz";
-            my $file = substr $gzfile, 0 -3;
+            my $file = substr $gzfile, 0, -3;
             my $url = "https://dumps.wikimedia.org/${lang}wiki/$opt{date}/$gzfile";
             say $url;
             my $start = time;
@@ -85,6 +85,8 @@ foreach my $lang (@languages) {
             warn "More than two files found for $lang: " . Dumper \@files;
             next;
         }
+        system "mysql -u root -psecret wikipedia -e 'DROP DATABASE wikipedia'";
+        system "mysql -u root -psecret wikipedia -e 'CREATE DATABASE wikipedia'";
         foreach my $file (@files) {
             system "mysql -u root -psecret wikipedia < $file";
         }
