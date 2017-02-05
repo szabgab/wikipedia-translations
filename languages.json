@@ -73,6 +73,10 @@
         "explain": "https://en.wikipedia.org/wiki/Icelandic_language",
         "languae": "Icelandic"
     },
+    "jv": {
+        "explain": "https://en.wikipedia.org/wiki/Javanese_language",
+        "language": "Javanese"
+    },
     "ko": {
         "explain": "https://en.wikipedia.org/wiki/Korean_language",
         "language": "Korean"
