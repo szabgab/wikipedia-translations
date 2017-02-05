@@ -25,6 +25,10 @@
         "explain": "https://en.wikipedia.org/wiki/Welsh_language",
         "language": "Welsh"
     },
+    "el": {
+        "explain": "https://en.wikipedia.org/wiki/Greek_language",
+        "language": "Greek"
+    },
     "fi": {
         "explain": "https://en.wikipedia.org/wiki/Finnish_language",
         "language": "Finnish"
@@ -64,10 +68,6 @@
     "id": {
         "explain": "https://en.wikipedia.org/wiki/Indonesian_language",
         "language": "Indonesian"
-    },
-    "el": {
-        "explain": "https://en.wikipedia.org/wiki/Greek_language",
-        "language": "Greek"
     },
     "ilo": {
         "explain": "https://en.wikipedia.org/wiki/Ilokano_language",
