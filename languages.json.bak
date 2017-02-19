@@ -137,8 +137,8 @@
         "explain": "https://en.wikipedia.org/wiki/Yoruba_language",
         "language": "Yor\u00f9b\u00e1"
     }
-	"hi":{
-	  "explain": "https://en.wikipedia.org/wiki/Hindi_language",
-	  "language": "Hindi"
+	"hi": {
+	    "explain": "https://en.wikipedia.org/wiki/Hindi_language",
+	    "language": "Hindi"
 	}
 }
