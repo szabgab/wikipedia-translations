@@ -12,6 +12,11 @@
         "language": "Arabic",
         "rtl": 1
     },
+    "arc": {
+        "explain": "https://en.wikipedia.org/wiki/Aramaic_language",
+        "language": "Aramaic",
+        "rtl": 1
+    },
     "azb": {
         "explain": "https://en.wikipedia.org/wiki/South_Azerbaijani_language",
         "language": "South Azerbaijani",
