@@ -146,5 +146,9 @@
         "explain": "https://en.wikipedia.org/wiki/Yiddish_language",
         "language": "Yiddish",
         "rtl": 1
-    }
+    },
+	"hi": {
+	    "explain": "https://en.wikipedia.org/wiki/Hindi_language",
+	    "language": "Hindi"
+	}
 }
