@@ -1,35 +1,47 @@
-Wikipedia - suggesting pages for translation
-=============================================
+# Wikipedia - suggesting pages for translation
 
 See article: https://code-maven.com/wikipedia
 
 
 There are several ways to suggest which pages to translate.
 
-1. Unless the topic is very language orcountry specific, there is no reason to have a wikipedia
-   entry in a language, but not in English. So the first caste would be
-   pages that available in a language other than English, but have no apparent English translations.
-   These articles might actually have an English version we just don't have the appropriate interwiki link.
-   Then the task is easy. Add the interwiki links.
-   If there really is no English version then they probably should be translated to English and then the
-   interwiki link can be added.
+## In language X but not in English
 
-2. Pages that are popular should probably have translations in more languages.
-   AFAIK We don't have access to visitors statistics, but we can measure popularity by the number
-   of translations. When considering which page to translate to your language, it would probably make more sense
-   to translate a page that already has been translated to more languages than the other page.
-   So find the pages with the most translations that are not translated a particular language.
+Unless the topic is very language or country specific, there is no reason to have a wikipedia
+entry in one language, but not in other languages. Specifically not in English. So the first case would be
+pages that available in a language X, other than English, but have no apparent English translations.
 
-3. Partially translated pages. If an English article that has 1000 words has a French version which is only 100 words
-   long then it is quite clear that the French version is missin a lot of content. Such pages would be good places
-   to contribute.
+These articles might actually have an English version we just don't have the appropriate interwiki link.
+Then the task is relatively easy. Find the appropriate link and add the interwiki links.
 
-- All the above could be filtered by topic. So "all the pages in one of the above groups that are in the category 'Chemists'"
+If there really is no English version then the page probably should be translated to English and then the
+interwiki link can be added.
+
+## Popular pages should probably have translations in every language
+
+AFAIK We don't have access to visitors statistics, so we need to use some other measure for popularity.
+For example we might assume that number of existing translation is a good indication to the popularity
+or usefulness of a page.
+
+When considering which page to translate to your language, it would probably make more sense
+to translate a page that already has been translated to more languages than another page that
+has been translated to fewer other languages.
+
+So we find the pages with the most translations that are not translated a particular language.
+
+
+## Partially translated pages.
+
+If an English article that has 1000 words has a French version which is only 100 words long then it is
+quite clear that the French version is missin a lot of content. Such pages would be good places
+to contribute.
+
+
+* All the above could be filtered by topic. So "all the pages in one of the above groups that are in the category 'Chemists'"
 
 
 
-More idea
-==========
+## More ideas
 
 * Show the date of the dumping
 
@@ -49,27 +61,28 @@ page and check if it has a link to the English version and if that English versi
   The Arabic files (which are 570 Mb) took 40 minutes to load into the database and 36 sec to generate the html.
 
 
-The code
-==========
+## The code
 
 languages.json - the list of langiages we are dealing with.
 
 wt.pl - the script that does the work.
 
 
-Installation
-============
+## Installation
+
 On Digital Ocean we need to install
+
+```
 apt-get install unzip libdbd-mysql-perl libwww-perl libpath-tiny-perl libweb-query-perl libjson-perl libdatetime-tiny-perl
 apt-get install mysql-server mysql-client  (congigre root password to 'secret')
 
 $ wget https://github.com/szabgab/wikipedia-translations/archive/master.zip
 $ unzip master.zip
 $ cd wikipedia-translations-master/
+```
 
+## Related pages
 
-Related pages
-===============
 * [List of Wikipedias](https://meta.wikimedia.org/wiki/List_of_Wikipedias)
 * [Wikipedia:Pages needing translation into English](https://en.wikipedia.org/wiki/Wikipedia:Pages_needing_translation_into_English)
 * [Wikipedia:Translators available](https://en.wikipedia.org/wiki/Wikipedia:Translators_available) for translating from other languages to English
