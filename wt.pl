@@ -58,7 +58,8 @@ if ($opt{fetch}) {
             say $url;
             my $start = time;
             if (not -e "sql/$gzfile" and not -e "sql/$file") {
-                system "wget $url";
+                my $exit_code = system "wget $url";
+                die "Exit code $exit_code. Could not fetch from $url\n" if $exit_code;
                 move $gzfile, "sql/$gzfile";
                 system "gunzip sql/$gzfile";
             }
@@ -212,7 +213,7 @@ sub usage {
     my $languages = join " ", sort keys %$conf;
     print <<"USAGE";
 Usage: $0 
-           --date YYYYMMDD
+           --date [latest | YYYYMMDD]
            --fetch
            --load
            --html
