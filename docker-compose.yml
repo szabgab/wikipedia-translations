@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  perl:
+    build: .
+    volumes:
+    - .:/opt
+    links:
+    - mariadb
+  db:
+    image: mariadb:10.1.44
+    restart: always
+    environemt:
+      MYSQL_ROOT_PASSWORD: secret
+    container_name: mariadb

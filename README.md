@@ -90,11 +90,11 @@ $ cd wikipedia-translations-master/
 * [Wikipedia:Translation](https://en.wikipedia.org/wiki/Wikipedia:Translation)
 
 Old process:
-On https://dumps.wikimedia.org/backup-index.html locate the links that have 'Dump complete' after it. 
+On https://dumps.wikimedia.org/backup-index.html locate the links that have 'Dump complete' after it.
 click on the link locate links that are "wiki-DATE-"
 
-suwiki-20160111-langlinks.sql.gz 
-suwiki-20160111-page.sql.gz 
+suwiki-20160111-langlinks.sql.gz
+suwiki-20160111-page.sql.gz
 
 unzip the files
 
@@ -106,7 +106,7 @@ They either need a link to be added or they need to be translated.
 $ mysql -u root -p secret
 > CREATE DATABASE wikipedia;
 
-$ mysql -u root -psecret wikipedia < huwiki-20160111-iwlinks.sql 
+$ mysql -u root -psecret wikipedia < huwiki-20160111-iwlinks.sql
 
 All the articles:
 
@@ -114,3 +114,7 @@ All the articles:
 SELECT page_title, page_id FROM page WHERE page_namespace=0 AND page_is_redirect=0 AND page_id NOT IN (SELECT ll_from FROM langlinks WHERE ll_lang='en');
 ```
 
+## Docker
+
+docker build -t mydocker .
+docker run -it --rm mydocker
